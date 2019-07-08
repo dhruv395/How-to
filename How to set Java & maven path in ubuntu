@@ -1,0 +1,9 @@
+install java and maven through cli and then 
+
+vi ~/.bashrc
+
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+M2_HOME=/opt/maven/apache-maven-3.6.1
+M2=$M2_HOME/bin
+export JAVA_HOME
+PATH=$PATH:$JAVA_HOME:$M2_HOME:$M2:$HOME/bin
