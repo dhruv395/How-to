@@ -1,5 +1,5 @@
     
-Resize disk from google console
+Resize disk from google console,go to  disk>click the required disk name > edit
         then in the command line
 
 df -hT            -> verify file system type and partition
