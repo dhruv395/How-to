@@ -1,0 +1,209 @@
+503: Service Unavailable 
+
+ The 503 status code, or Service Unavailable error, means that the server is overloaded or under maintenance. 
+
+If the server is not under maintenance, this can indicate that the server does not have enough CPU or memory resources to handle all of the incoming requests, or that the web server needs to be configured to allow more users, threads, or processes. 
+
+ 
+502 Bad Gateway/ 504 Gateway Timeout 
+
+ Bad Gateway error, means that the server is a gateway or proxy server, and it is not receiving a valid response from the backend servers that should actually fulfill the request. 
+
+If the server in question is a reverse proxy server, such as a load balancer, here are a few things to check: 
+
+ The backend servers (where the HTTP requests are being forwarded to) are healthy 
+
+The reverse proxy is configured properly, with the proper backends specified 
+
+The network connection between the backend servers and reverse proxy server is healthy. If the servers can communicate on other ports, make sure that the firewall is allowing the traffic between them 
+
+If your web application is configured to listen on a socket, ensure that the socket exists in the correct location and that it has the proper permissions. 
+
+ 
+500 Internal Server Error 
+
+ 
+An HTTP 500 error can be caused by a permissions problem with your website’s files or folders. Check the permissions on all of your main folders and scripts. Most Perl and CGI files need to have their permissions set to 755. in cgi-bin directory.  
+
+This most common cause for this error is server misconfiguration (e.g. a malformed .htaccess file) or missing packages (e.g. trying to execute a PHP file without PHP installed properly). 
+
+ 
+
+403 Forbidden 
+
+ 
+
+means that the user made a valid request but the server is refusing to serve the request, due to a lack of permission to access the requested resource.	  
+
+when you mv something from one place to another. It preserves the selinux context of the original 
+
+ 
+
+Another potential cause of 403 errors, often intentinally, is the use of an .htaccess file. The .htaccess file can be used to deny access of certain resources to specific IP addresses or ranges, for example.  
+
+If the user is unexpectedly getting a 403 Forbidden error, ensure that it is not being caused by your .htaccess settings. 
+
+ 
+
+when you move it, so if you untar something in /home or /tmp it gets given an selinux context that matches its location. Now you mv that to /var/www/html and it takes the context saying it belongs in /tmp or /home with it and httpd is not allowed by policy to access those files.  
+
+If you cp the files instead of mv them, the selinux context gets assigned according to the location you're copying to, not where it's coming from. Running restorecon puts the context back to its default and fixes it too. 
+
+ 
+
+404 Not Found 
+
+ 
+
+means that the user is able to communicate with the server but it is unable to locate the requested file or resource. 
+
+Does the file exist in the correct location on the server? Was the resource was moved or deleted on the server? 
+
+Does the server configuration have the correct document root location? 
+
+ 
+
+400 Bad Request 
+
+ 
+
+means the HTTP request that was sent to the server has invalid syntax. 
+
+ 
+
+401 Unauthorized 
+
+ 
+
+means that the user trying to access the resource has not been authenticated or has not been authenticated correctly. This means that the user must provide credentials to be able to view the protected resource. 
+
+ 
+
+ 
+
+Join between tables in two different databases? 
+
+ 
+
+SELECT * 
+
+FROM A.tableA JOIN B.tableB  
+
+ 
+
+ 
+
+##Increase heap Memory in tomcat? 
+
+ 
+
+Locate and open the /usr/local/jss/tomcat/bin/setenv.sh file. 
+
+Locate the JAVA_OPTS environment variable that defines memory and uncomment it if it is ?commented. The variable looks something like the following: 
+
+JAVA_OPTS=" -XmxSizeM -XX:MaxPermSize=256M"	[or CATALINA_OPTS] 
+
+Allocate additional memory to Tomcat by modifying the -Xmx parameter. 
+
+For example, modifying the variable to look something like this allocates 1 GB of RAM: 
+
+JAVA_OPTS=" -Xmx1024M -XX:MaxPermSize=256M" 
+
+or  
+
+export CATALINA_OPTS="$CATALINA_OPTS -Xms512m" 
+
+export CATALINA_OPTS="$CATALINA_OPTS -Xmx8192m" 
+
+export CATALINA_OPTS="$CATALINA_OPTS -XX:MaxPermSize=256m" 
+
+ 
+
+ 
+
+disable unused modules in apache to save memory: 
+
+ 
+
+-  you need to modify *.conf file stored in /etc/httpd/conf.d/ directory. 
+
+-if the system does not need to use mod_python, rename ‘python.conf’ to ‘python.bak’ and restart Apache with the command ‘service httpd restart in order to disable that particular module and save memory. 
+
+# cd /etc/httpd/conf.d/ 
+
+# mv perl.conf no.perl.bak 
+
+# /etc/init.d/httpd restart 
+
+or  
+
+grep LoadModule /etc/httpd/conf.modules.d/ 
+
+ 
+
+From <https://www.digitalocean.com/community/tutorials/how-to-use-apache-as-a-reverse-proxy-with-mod_proxy-on-centos-7>  
+
+To disable the particular module, you can insert a “#” at the beginning of that line and restart the service. 
+
+ 
+
+To re-enable modules, simply rename them to their original names and restart Apache to get back module functionality: 
+
+# cd /etc/httpd/conf.d/ 
+
+# mv no.perl.bak perl.conf 
+
+# /etc/init.d/httpd restart 
+
+ 
+
+Tomcat-user.xml file: 
+
+  <role rolename="manager-gui"/> 
+
+  <role rolename="manager-script"/> 
+
+  <role rolename="manager-jmx"/> 
+
+  <role rolename="manager-status"/> 
+
+  <role rolename="admin-gui"/> 
+
+  <role rolename="admin-script"/> 
+
+  <user username="admin" password="admin" roles="manager-gui,manager-script,manager-jmx,manager-status,admin-gui,admin-script"/> 
+
+ Virtual Host  
+
+ Directory /> 
+Require all granted 
+</Directory> 
+
+It means that everyone is allowed access for the / directory. It's the same as  
+ 
+Code: 
+
+<Directory /> 
+  Allow from all 
+</Directory> 
+
+ The webserver must not have access to the / directory for security reasons. It should only be allowed to access the DocumentRoot and beneath. For this reason the default settings are: 
+ 
+Code: 
+
+<Directory /> 
+    AllowOverride none 
+    Require all denied 
+</Directory> 
+<Directory "/srv/httpd/htdocs"> 
+    Options Indexes FollowSymLinks 
+    AllowOverride None 
+    Require all granted 
+</Directory> 
+
+ Quote: 
+You don't have permission to access / on this server. 
+
+If you get this error, it means that your DocumentRoot directory does not have the correct permissions. For the webserver the / directory is the directory specified by the DocumentRoot directive. 
+Give it a 755 mod and it should be fine. 
+
