@@ -8,3 +8,12 @@ M2_HOME=/opt/maven/apache-maven-3.6.1
 M2=$M2_HOME/bin
 export JAVA_HOME
 PATH=$PATH:$JAVA_HOME:$M2_HOME:$M2:$HOME/bin
+
+  or
+  
+ JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64
+M2_HOME=/root/maven/apache-maven-3.6.1
+M2=$M2_HOME/bin
+#export PATH=$PATH:$JAVA_HOME/bin
+export PATH=$PATH:$JAVA_HOME:$M2_HOME:$M2:$HOME/bin
+export JAVA_HOME
