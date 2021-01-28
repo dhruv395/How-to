@@ -1,0 +1,13 @@
+date
+timedatectl list-timezones
+sudo timedatectl set-timezone Asia/Kolkata
+hostnamectl set-hostname <hostname>
+update sudo vim /etc/hosts
+
+To configure java home path
+java -version
+echo $JAVA_HOME
+if it's empty then update
+sudo vim /etc/environment
+JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+source /etc/environment
