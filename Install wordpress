@@ -1,0 +1,21 @@
+https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-lamp-on-ubuntu-18-04
+
+
+wget https://wordpress.org/latest.tar.gz
+sudo tar -xvzf /home/ubuntu/latest.tar.gz -C /var/www/html/
+sudo mv wordpress raytechgpscamera
+sudo chown -R www-data:www-data  raytechgpscamera/
+sudo mv wp-config-sample.php wp-config.php
+
+mysql:
+CREATE DATABASE dbname DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+or
+create database blog DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+GRANT ALL ON dbname.* TO 'username'@'localhost';
+FLUSH PRIVILEGES;
+
+cd /etc/apache2/sites-available
+sudo cp cameyecarsecurity.conf  raytechgpscamera.conf
+sudo a2ensite  raytechgpscamera.conf
+sudo apache2ctl configtest
+sudo service apache2 reload
