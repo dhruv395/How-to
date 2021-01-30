@@ -1,0 +1,49 @@
+Options -MultiViews
+
+## Remove trialing slash
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ https://www.raytech.com/website1/$1 [L,R=301]
+
+# remove .php
+RewriteEngine On
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{REQUEST_URI} !/index\.php$
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.php [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# rewrite with php php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/website1/$1.php -f
+RewriteRule ^(.+)$ $1.php [L]d
+
+### /website1/index.php --> https://www.raytech.com/website1/
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /website1/page-not-found.php [L,R=301]
+
+RewriteBase /website1
+RewriteCond %{THE_REQUEST} index\.php
+RewriteRule ^index\.php$ https://www\.raytech\.com/website1/ [R=301,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index\.php [L]
+
+
+#Cache-control
+<filesMatch ".(ico|pdf|flv|jpg|jpeg|png|gif|js|mp3|mp4|css|swf|svg)$">
+    Header set Cache-Control "max-age=84600, public"
+</filesMatch>
+
+
+### index --> https://www.raytech.com/website1/
+Redirect 301 /website1/index https://www.raytech.com/website1/
+
+## Redirect to https and www
+<IfModule mod_rewrite.c>
+        RewriteCond %{HTTPS} off [OR]
+        RewriteCond %{HTTP_HOST} !^www\. [NC]
+        RewriteCond %{HTTP_HOST} ^(.*)$  [NC]
+        RewriteRule (.*) https://www.%1/website1/$1 [R=301,L]
+</IfModule>
