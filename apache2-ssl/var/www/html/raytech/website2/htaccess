@@ -1,0 +1,39 @@
+Options -MultiViews
+
+## Remove trialing slash
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ https://www.raytech.com/website2/$1 [L,R=301]
+
+# remove .php
+RewriteEngine On
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{REQUEST_URI} !/index\.php$
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.php [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# rewrite with php php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/website2/$1.php -f
+RewriteRule ^(.+?)/?$ $1.php [L]
+
+### /website2/index.php --> https://www.raytech.com/website2/
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /website2/page-not-found.php [L,R=301]
+
+RewriteBase /website2
+RewriteCond %{THE_REQUEST} index\.php
+RewriteRule ^index\.php$ https://www\.raytech\.com/website2/ [R=301,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index\.php [L]
+
+#Cache-control
+<filesMatch ".(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf|svg|mp3|mp4)$">
+    Header set Cache-Control "max-age=84600, public"
+</filesMatch>
+
+### index --> https://www.raytech.com/website2/
+Redirect 301 /website2/index https://www.raytech.com/website2/
