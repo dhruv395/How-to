@@ -1,0 +1,19 @@
+check elk version
+----------------
+
+curl -XGET 'localhost:9200'
+
+To check if Elasticsearch is running
+curl http://localhost:9200/_cluster/health?pretty
+
+list all index:
+curl -XGET http://localhost:9200/_cat/indices?v
+
+echo $(date -d"45 days ago" +"%Y.%m.%d")
+curl -XDELETE http://localhost:9200/logstash-2020.08.22-000001
+
+#delete index:         curl -XDELETE 'localhost:9200/index_name'
+#delete all indices:   curl -XDELETE 'localhost:9200/_all'
+#delete document   :   curl -XDELETE 'localhost:9200/index_name/type_name/document_id'
+
+curl http://localhost:5601/status
