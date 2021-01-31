@@ -1,0 +1,11 @@
+######if you get below fastcgi error in apache2, and can't access website,
+server reached MaxRequestWorkers setting, consider raising the MaxRequestWorkers setting
+
+then we need to modify few parameters in phpfpm conf file,
+vim /etc/php/7.2/fpm/pool.d/www.conf
+
+pm.max_children = 128
+pm.min_spare_servers = 2
+pm.max_spare_servers = 10
+pm.process_idle_timeout = 60s;
+pm.max_requests = 0
